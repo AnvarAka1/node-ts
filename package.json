@@ -1,5 +1,5 @@
 {
-  "name": "worklance",
+"name": "worklance",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -40,6 +40,9 @@
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "helmet": "^5.0.1",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.41"
   }
 }
