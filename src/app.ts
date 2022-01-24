@@ -1,11 +1,14 @@
+import 'dotenv/config'
 import 'reflect-metadata'
 import express, { json } from 'express'
 import helmet from 'helmet'
+import { createConnection } from 'typeorm'
 
 import routes from './modules/routes'
 
 const PORT = 8000
 
+createConnection()
 const app = express()
 
 app.use(helmet())
