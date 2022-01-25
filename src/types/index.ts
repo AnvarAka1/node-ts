@@ -11,6 +11,7 @@ export type UserType = {
   readonly id: number
   readonly role: string
   readonly email: string
+  readonly password: string
   readonly avatar: string
   readonly firstName: string
   readonly lastName: string

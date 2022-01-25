@@ -9,6 +9,7 @@ module.exports = {
     "import/newline-after-import": ["error"],
     "import/no-unresolved": "off",
     "import/named": "off",
+    'import/no-named-as-default-member': 'off',
     "import/no-extraneous-dependencies": ["error"],
     "key-spacing": "off",
     "no-use-before-define": "off",
