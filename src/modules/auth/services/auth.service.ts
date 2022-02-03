@@ -1,6 +1,6 @@
-import { getRepository, In } from 'typeorm'
+import { getRepository, In, getManager } from 'typeorm'
 import { Request } from 'express'
-import { hash, compare } from 'bcrypt'
+import { compare, hash } from 'bcrypt'
 
 import { User } from 'src/entity/User'
 import { Freelancer } from 'src/entity/Freelancer'
@@ -10,6 +10,7 @@ import { CLIENT_TYPE, FREELANCER_TYPE } from 'src/constants/roles'
 import { Stack } from 'src/entity/Stack'
 import { Skill } from 'src/entity/Skill'
 import { Position } from 'src/entity/Position'
+import { generateJwtToken } from 'src/libs/jwt'
 
 export const signUp = async (req: Request<unknown, unknown, UserType & FreelancerType & ClientType>) => {
   const userRepository = getRepository(User)
@@ -25,6 +26,12 @@ export const signUp = async (req: Request<unknown, unknown, UserType & Freelance
   } = req.body
 
   try {
+    const existingUser = await userRepository.findOne({ email })
+
+    if (existingUser) {
+      throw Error('User already exists.')
+    }
+
     const hashedPassword = await hash(password, 12)
 
     const user = userRepository.create({
@@ -54,14 +61,21 @@ export const signUp = async (req: Request<unknown, unknown, UserType & Freelance
         throw Error('Internal server error.')
       }
 
-      const freelancer = freelancerRepository.create({
-        stack: stackEntity,
-        skills: skillsEntity,
-        user
-      })
+      await getManager().transaction(async transactionManager => {
+        await transactionManager.save(user)
 
-      await userRepository.save(user)
-      await freelancerRepository.save(freelancer)
+        const freelancer = freelancerRepository.create({
+          stack: stackEntity,
+          skills: skillsEntity,
+          overwork: false,
+          rating: 0,
+          paymentMethods: 'cash',
+          status: 'active',
+          user
+        })
+
+        await transactionManager.save(freelancer)
+      })
     }
 
     if (role === CLIENT_TYPE) {
@@ -76,16 +90,17 @@ export const signUp = async (req: Request<unknown, unknown, UserType & Freelance
         throw Error('Internal server error.')
       }
 
-      const client = clientRepository.create({
-        companyName,
-        position: positionEntity,
-        user
+      await getManager().transaction(async transactionManager => {
+        await transactionManager.save(user)
+
+        const client = clientRepository.create({
+          companyName,
+          position: positionEntity,
+          user
+        })
+
+        await transactionManager.save(client)
       })
-
-      client.companyName = companyName
-
-      await userRepository.save(user)
-      await clientRepository.save(client)
     }
   } finally {}
 
@@ -105,9 +120,12 @@ export const signIn = async (req: Request<unknown, unknown, UserType>) => {
     if (!isPasswordMatch) {
       throw Error('Invalid email or password.')
     }
-  } finally {}
 
-  return { token: '' }
+    const payload = { userId: user.id, role: user.role }
+    const token = generateJwtToken(payload)
+
+    return { token }
+  } finally {}
 }
 
 export default { signUp, signIn }
