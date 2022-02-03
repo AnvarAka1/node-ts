@@ -37,23 +37,24 @@ export class Freelancer extends BaseEntity {
   @ManyToMany(_type => Project, project => project.candidates)
   requestedProjects: Project[]
 
-  @Column()
+  @Column({ default: false })
   overwork: boolean
 
-  @Column()
+  @Column({ default: 'active' })
   status: string
 
+  // TODO payment methods should be changed to object
   @Column()
   paymentMethods: string
 
   @Column()
   rating: number
 
-  @OneToOne(_type => FreelancerPrice)
+  @OneToOne(_type => FreelancerPrice, { nullable: true })
   @JoinColumn()
   price: FreelancerPrice
 
-  @OneToOne(_type => Portfolio)
+  @OneToOne(_type => Portfolio, { nullable: true })
   @JoinColumn()
   portfolio: Portfolio
 

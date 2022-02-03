@@ -16,11 +16,11 @@ export class Client extends BaseEntity {
   @ManyToOne(_type => Position, position => position.clients)
   position: Position
 
-  @OneToOne(_type => ClientReview, clientReview => clientReview.client)
+  @OneToOne(_type => ClientReview, clientReview => clientReview.client, { nullable: true })
   @JoinColumn()
   review: ClientReview
 
-  @OneToMany(_type => Project, project => project.client)
+  @OneToMany(_type => Project, project => project.client, { nullable: true })
   projects: Project[]
 
   @OneToOne(_type => User, user => user.client)

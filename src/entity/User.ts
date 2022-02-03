@@ -17,7 +17,7 @@ export class User extends BaseEntity {
   @Column()
   password: string
 
-  @Column()
+  @Column({ default: '' })
   avatar: string
 
   @Column()
@@ -29,13 +29,13 @@ export class User extends BaseEntity {
   @Column()
   fullName: string
 
-  @Column()
+  @Column({ default: '' })
   phone: string
 
   @Column({ type: 'text', nullable: true })
   description: string
 
-  @Column()
+  @Column({ nullable: true })
   age: number
 
   @OneToOne(_type => Freelancer, freelancer => freelancer.user, { nullable: true })
