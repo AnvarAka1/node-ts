@@ -34,7 +34,8 @@ app.use(routes)
 app.use(function (err: Record<string, unknown>, req: Request, res: Response, next: NextFunction) {
   // eslint-disable-next-line no-console
   console.error(err.stack)
-  res.status(500).send({ err: err.message })
+  const errorMessage = 'Internal server error.'
+  res.status(500).send({ err: errorMessage })
 })
 
 app.listen(8000, () => {

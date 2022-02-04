@@ -18,6 +18,7 @@ import { Project } from 'src/entity/Project'
 import { FreelancerPrice } from 'src/entity/FreelancerPrice'
 import { Portfolio } from 'src/entity/Portfolio'
 import { User } from 'src/entity/User'
+import { PaymentMethod } from 'src/entity/PaymentMethod'
 
 @Entity()
 export class Freelancer extends BaseEntity {
@@ -43,9 +44,9 @@ export class Freelancer extends BaseEntity {
   @Column({ default: 'active' })
   status: string
 
-  // TODO payment methods should be changed to object
-  @Column()
-  paymentMethods: string
+  @OneToOne(_type => PaymentMethod, { nullable: true })
+  @JoinColumn()
+  paymentMethods: PaymentMethod
 
   @Column()
   rating: number

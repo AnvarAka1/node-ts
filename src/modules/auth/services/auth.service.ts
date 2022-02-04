@@ -1,6 +1,6 @@
 import { getRepository, In, getManager } from 'typeorm'
 import { Request } from 'express'
-import { compare, hash } from 'bcrypt'
+import { hash, compare } from 'bcrypt'
 
 import { User } from 'src/entity/User'
 import { Freelancer } from 'src/entity/Freelancer'
@@ -11,6 +11,7 @@ import { Stack } from 'src/entity/Stack'
 import { Skill } from 'src/entity/Skill'
 import { Position } from 'src/entity/Position'
 import { generateJwtToken } from 'src/libs/jwt'
+import { PaymentMethod } from 'src/entity/PaymentMethod'
 
 export const signUp = async (req: Request<unknown, unknown, UserType & FreelancerType & ClientType>) => {
   const userRepository = getRepository(User)
@@ -51,6 +52,13 @@ export const signUp = async (req: Request<unknown, unknown, UserType & Freelance
       const freelancerRepository = getRepository(Freelancer)
       const stackRepository = getRepository(Stack)
       const skillRepository = getRepository(Skill)
+      const paymentMethodRepository = getRepository(PaymentMethod)
+
+      const paymentMethods = paymentMethodRepository.create({
+        cash: true,
+        card: false,
+        transfer: false
+      })
 
       const stackEntity = await stackRepository.findOne({ id: stack.id })
 
@@ -58,19 +66,20 @@ export const signUp = async (req: Request<unknown, unknown, UserType & Freelance
       const skillsEntity = await skillRepository.find({ where: { id: In(skillIds) } })
 
       if (!skillsEntity || !stackEntity) {
-        throw Error('Internal server error.')
+        throw Error()
       }
 
       await getManager().transaction(async transactionManager => {
         await transactionManager.save(user)
+        await transactionManager.save(paymentMethods)
 
         const freelancer = freelancerRepository.create({
           stack: stackEntity,
           skills: skillsEntity,
           overwork: false,
           rating: 0,
-          paymentMethods: 'cash',
           status: 'active',
+          paymentMethods,
           user
         })
 
@@ -87,7 +96,7 @@ export const signUp = async (req: Request<unknown, unknown, UserType & Freelance
       const positionEntity = await positionRepository.findOne({ id: position.id })
 
       if (!positionEntity) {
-        throw Error('Internal server error.')
+        throw Error()
       }
 
       await getManager().transaction(async transactionManager => {
@@ -102,7 +111,8 @@ export const signUp = async (req: Request<unknown, unknown, UserType & Freelance
         await transactionManager.save(client)
       })
     }
-  } finally {}
+  } finally {
+  }
 
   return {}
 }
@@ -125,7 +135,8 @@ export const signIn = async (req: Request<unknown, unknown, UserType>) => {
     const token = generateJwtToken(payload)
 
     return { token }
-  } finally {}
+  } finally {
+  }
 }
 
 export default { signUp, signIn }
