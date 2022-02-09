@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToOne,
+  CreateDateColumn,
+  UpdateDateColumn
+} from 'typeorm'
 
 import { Freelancer } from 'src/entity/Freelancer'
 import { Client } from 'src/entity/Client'
@@ -14,7 +22,7 @@ export class User extends BaseEntity {
   @Column()
   email: string
 
-  @Column()
+  @Column({ select: false })
   password: string
 
   @Column({ default: '' })
@@ -43,4 +51,10 @@ export class User extends BaseEntity {
 
   @OneToOne(_type => Client, client => client.user, { nullable: true })
   client: Client
+
+  @CreateDateColumn()
+  createAt: Date
+
+  @UpdateDateColumn()
+  updatedAt: Date
 }

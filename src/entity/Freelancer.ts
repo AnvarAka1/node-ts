@@ -1,6 +1,6 @@
 import {
   BaseEntity,
-  Column,
+  Column, CreateDateColumn,
   Entity,
   JoinColumn,
   JoinTable,
@@ -8,7 +8,7 @@ import {
   ManyToOne,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn, UpdateDateColumn
 } from 'typeorm'
 
 import { UserType } from 'src/types'
@@ -62,4 +62,10 @@ export class Freelancer extends BaseEntity {
   @OneToOne(_type => User, user => user.freelancer)
   @JoinColumn()
   user: UserType
+
+  @CreateDateColumn()
+  createAt: Date
+
+  @UpdateDateColumn()
+  updatedAt: Date
 }

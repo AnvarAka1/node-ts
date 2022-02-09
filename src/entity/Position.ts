@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm'
 
 import { Client } from 'src/entity/Client'
 
@@ -12,4 +20,10 @@ export class Position extends BaseEntity {
 
   @OneToMany(_type => Client, client => client.position)
   clients: Client[]
+
+  @CreateDateColumn()
+  createAt: Date
+
+  @UpdateDateColumn()
+  updatedAt: Date
 }

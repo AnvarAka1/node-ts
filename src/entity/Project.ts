@@ -1,13 +1,13 @@
 import {
   BaseEntity,
-  Column,
+  Column, CreateDateColumn,
   Entity,
   JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
   OneToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn, UpdateDateColumn
 } from 'typeorm'
 
 import { Freelancer } from 'src/entity/Freelancer'
@@ -30,7 +30,7 @@ export class Project extends BaseEntity {
   @Column('text')
   description: string
 
-  @Column()
+  @Column('text')
   requirement: string
 
   @OneToOne(_type => PaymentMethod)
@@ -41,7 +41,7 @@ export class Project extends BaseEntity {
   @JoinColumn()
   price: ProjectPrice
 
-  @Column()
+  @Column({ default: false })
   overwork: boolean
 
   @ManyToOne(_type => Stack, stack => stack.projects)
@@ -51,20 +51,28 @@ export class Project extends BaseEntity {
   @JoinTable()
   skills: Skill[]
 
-  @Column()
+  @Column({ default: 'active' })
   status: string
 
-  @Column()
+  @Column({ default: false })
   reassessment: boolean
 
-  @Column()
+  @Column({ nullable: true })
   file: string
 
-  @ManyToMany(_type => Freelancer, freelancer => freelancer.requestedProjects)
+  @ManyToMany(
+    _type => Freelancer,
+    freelancer => freelancer.requestedProjects,
+    { nullable: true }
+  )
   @JoinTable()
   candidates: Freelancer[]
 
-  @ManyToOne(_type => Freelancer, freelancer => freelancer.projects)
+  @ManyToOne(
+    _type => Freelancer,
+    freelancer => freelancer.projects,
+    { nullable: true }
+  )
   freelancer: Freelancer
 
   @ManyToOne(_type => Client, client => client.projects)
@@ -76,4 +84,10 @@ export class Project extends BaseEntity {
   @OneToOne(_type => ProjectReview, projectReview => projectReview.project)
   @JoinColumn()
   review: ProjectReview
+
+  @CreateDateColumn()
+  createAt: Date
+
+  @UpdateDateColumn()
+  updatedAt: Date
 }

@@ -1,7 +1,7 @@
 import { sign, verify } from 'jsonwebtoken'
 
 export type JwtPayloadType = {
-  userId: number
+  id: number
   role: string
 }
 
