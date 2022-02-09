@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm'
 
 import { Freelancer } from 'src/entity/Freelancer'
 import { Project } from 'src/entity/Project'
@@ -16,4 +24,10 @@ export class Skill extends BaseEntity {
 
   @ManyToMany(_type => Project, project => project.skills)
   projects: Project[]
+
+  @CreateDateColumn()
+  createAt: Date
+
+  @UpdateDateColumn()
+  updatedAt: Date
 }

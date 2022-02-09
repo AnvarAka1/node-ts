@@ -10,10 +10,10 @@ const create = async (req: Request<unknown, unknown, Skill>) => {
       throw Error('Name is required')
     }
     const skillRepository = getRepository(Skill)
-
     const skill = skillRepository.create({ name })
+    const result = await skillRepository.save(skill)
 
-    return skillRepository.save(skill)
+    return { result }
   } finally {}
 }
 

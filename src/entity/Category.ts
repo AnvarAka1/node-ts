@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
 export class Category extends BaseEntity {
@@ -13,4 +13,10 @@ export class Category extends BaseEntity {
 
   @Column()
   count: number
+
+  @CreateDateColumn()
+  createAt: Date
+
+  @UpdateDateColumn()
+  updatedAt: Date
 }

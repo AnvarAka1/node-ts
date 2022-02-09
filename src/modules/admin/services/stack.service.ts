@@ -10,10 +10,10 @@ const create = async (req: Request<unknown, unknown, Stack>) => {
       throw Error('Name is required')
     }
     const stackRepository = getRepository(Stack)
-
     const stack = stackRepository.create({ name })
+    const result = await stackRepository.save(stack)
 
-    return stackRepository.save(stack)
+    return { result }
   } finally {}
 }
 

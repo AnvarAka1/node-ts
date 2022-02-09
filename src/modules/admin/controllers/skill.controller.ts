@@ -6,7 +6,7 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await skillService.create(req)
 
-    return res.status(200).json({ result })
+    return res.status(200).json(result)
   } catch (error) {
     next(error)
   }

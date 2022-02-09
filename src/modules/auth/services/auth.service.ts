@@ -1,11 +1,10 @@
-import { getRepository, In, getManager } from 'typeorm'
+import { getManager, getRepository, In } from 'typeorm'
 import { Request } from 'express'
-import { hash, compare } from 'bcrypt'
+import { compare, hash } from 'bcrypt'
 
 import { User } from 'src/entity/User'
 import { Freelancer } from 'src/entity/Freelancer'
 import { Client } from 'src/entity/Client'
-import { ClientType, FreelancerType, UserType } from 'src/types'
 import { CLIENT_TYPE, FREELANCER_TYPE } from 'src/constants/roles'
 import { Stack } from 'src/entity/Stack'
 import { Skill } from 'src/entity/Skill'
@@ -13,7 +12,7 @@ import { Position } from 'src/entity/Position'
 import { generateJwtToken } from 'src/libs/jwt'
 import { PaymentMethod } from 'src/entity/PaymentMethod'
 
-export const signUp = async (req: Request<unknown, unknown, UserType & FreelancerType & ClientType>) => {
+export const signUp = async (req: Request<unknown, unknown, User & Freelancer & Client>) => {
   const userRepository = getRepository(User)
 
   const {
@@ -117,11 +116,16 @@ export const signUp = async (req: Request<unknown, unknown, UserType & Freelance
   return {}
 }
 
-export const signIn = async (req: Request<unknown, unknown, UserType>) => {
+export const signIn = async (req: Request<unknown, unknown, User>) => {
   const { email, password } = req.body
   const userRepository = getRepository(User)
   try {
-    const user = await userRepository.findOne({ email })
+    const user = await userRepository
+      .createQueryBuilder('user')
+      .where('user.email = :email', { email })
+      .addSelect('user.password')
+      .getOneOrFail()
+
     if (!user) {
       throw Error('Invalid email or password.')
     }
@@ -131,7 +135,7 @@ export const signIn = async (req: Request<unknown, unknown, UserType>) => {
       throw Error('Invalid email or password.')
     }
 
-    const payload = { userId: user.id, role: user.role }
+    const payload = { id: user.id, role: user.role }
     const token = generateJwtToken(payload)
 
     return { token }

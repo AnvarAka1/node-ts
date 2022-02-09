@@ -10,10 +10,10 @@ const create = async (req: Request<unknown, unknown, Position>) => {
       throw Error('Name is required')
     }
     const positionRepository = getRepository(Position)
-
     const position = positionRepository.create({ name })
+    const result = await positionRepository.save(position)
 
-    return positionRepository.save(position)
+    return { result }
   } finally {}
 }
 

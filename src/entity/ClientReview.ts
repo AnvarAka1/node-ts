@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm'
 
 import { Client } from 'src/entity/Client'
 
@@ -15,4 +23,10 @@ export class ClientReview extends BaseEntity {
 
   @OneToOne(_type => Client, client => client.review)
   client: Client
+
+  @CreateDateColumn()
+  createAt: Date
+
+  @UpdateDateColumn()
+  updatedAt: Date
 }
