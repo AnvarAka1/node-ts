@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+
+import { Freelancer } from 'src/entity/Freelancer'
 
 @Entity()
 export class Portfolio extends BaseEntity {
@@ -13,4 +15,8 @@ export class Portfolio extends BaseEntity {
 
   @Column()
   link: string
+
+  @OneToOne(_type => Freelancer, freelancer => freelancer.portfolio)
+  @JoinColumn()
+  freelancer: Freelancer
 }

@@ -1,12 +1,13 @@
 import { Router } from 'express'
 
+import profileController from '../controllers/profile.controller'
 import projectController from '../controllers/project.controller'
 
 const router = Router()
 
-router.get('/profile/detail', () => {})
-router.get('/profile/general/update', () => {})
-router.get('/profile/security/update', () => {})
+router.get('/profile/detail', profileController.profileDetail)
+router.put('/profile/general/update', profileController.updateGeneral)
+router.put('/profile/security/update', profileController.updateSecurity)
 
 router.get('/freelancers/list', () => {})
 router.get('/freelancers/:id/detail', () => {})

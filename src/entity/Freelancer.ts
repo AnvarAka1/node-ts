@@ -45,18 +45,15 @@ export class Freelancer extends BaseEntity {
   status: string
 
   @OneToOne(_type => PaymentMethod, { nullable: true })
-  @JoinColumn()
   paymentMethods: PaymentMethod
 
   @Column()
   rating: number
 
-  @OneToOne(_type => FreelancerPrice, { nullable: true })
-  @JoinColumn()
+  @OneToOne(_type => FreelancerPrice, freelancerPrice => freelancerPrice.freelancer, { nullable: true })
   price: FreelancerPrice
 
-  @OneToOne(_type => Portfolio, { nullable: true })
-  @JoinColumn()
+  @OneToOne(_type => Portfolio, portfolio => portfolio.freelancer, { nullable: true })
   portfolio: Portfolio
 
   @OneToOne(_type => User, user => user.freelancer)

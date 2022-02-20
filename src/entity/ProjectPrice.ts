@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 
 import { Project } from 'src/entity/Project'
 
@@ -13,6 +13,7 @@ export class ProjectPrice extends BaseEntity {
   @Column()
   currency: string
 
-  @OneToOne(_type => Project)
+  @OneToOne(_type => Project, project => project.price)
+  @JoinColumn()
   project: Project
 }

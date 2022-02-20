@@ -123,3 +123,10 @@ export type CategoryType = {
   readonly imagePath: string
   readonly count: number
 }
+
+// ----------------- NEW -----------------
+export type NewPasswordDTO = {
+  password: string,
+  newPassword: string,
+  confirmPassword: string
+}

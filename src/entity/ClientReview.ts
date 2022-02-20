@@ -2,7 +2,7 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  Entity,
+  Entity, JoinColumn, ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -21,7 +21,7 @@ export class ClientReview extends BaseEntity {
   @Column('text')
   comment: string
 
-  @OneToOne(_type => Client, client => client.review)
+  @ManyToOne(_type => Client, client => client.reviews)
   client: Client
 
   @CreateDateColumn()
