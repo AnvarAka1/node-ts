@@ -2,7 +2,7 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  Entity,
+  Entity, JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -22,6 +22,7 @@ export class ProjectReview extends BaseEntity {
   comment: string
 
   @OneToOne(_type => Project, project => project.review)
+  @JoinColumn()
   project: Project
 
   @CreateDateColumn()

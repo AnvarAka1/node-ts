@@ -11,6 +11,8 @@ import { Skill } from 'src/entity/Skill'
 import { Position } from 'src/entity/Position'
 import { generateJwtToken } from 'src/libs/jwt'
 import { PaymentMethod } from 'src/entity/PaymentMethod'
+import { Portfolio } from 'src/entity/Portfolio'
+import { FreelancerPrice } from 'src/entity/FreelancerPrice'
 
 export const signUp = async (req: Request<unknown, unknown, User & Freelancer & Client>) => {
   const userRepository = getRepository(User)
@@ -52,11 +54,24 @@ export const signUp = async (req: Request<unknown, unknown, User & Freelancer & 
       const stackRepository = getRepository(Stack)
       const skillRepository = getRepository(Skill)
       const paymentMethodRepository = getRepository(PaymentMethod)
+      const portfolioRepository = getRepository(Portfolio)
+      const priceRepository = getRepository(FreelancerPrice)
 
       const paymentMethods = paymentMethodRepository.create({
         cash: true,
         card: false,
         transfer: false
+      })
+
+      const portfolio = portfolioRepository.create({
+        behance: '',
+        link: '',
+        github: ''
+      })
+
+      const price = priceRepository.create({
+        price: 0,
+        currency: 'usd'
       })
 
       const stackEntity = await stackRepository.findOne({ id: stack.id })
@@ -71,6 +86,8 @@ export const signUp = async (req: Request<unknown, unknown, User & Freelancer & 
       await getManager().transaction(async transactionManager => {
         await transactionManager.save(user)
         await transactionManager.save(paymentMethods)
+        await transactionManager.save(portfolio)
+        await transactionManager.save(price)
 
         const freelancer = freelancerRepository.create({
           stack: stackEntity,
@@ -79,6 +96,8 @@ export const signUp = async (req: Request<unknown, unknown, User & Freelancer & 
           rating: 0,
           status: 'active',
           paymentMethods,
+          portfolio,
+          price,
           user
         })
 

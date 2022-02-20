@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 
 import { Freelancer } from 'src/entity/Freelancer'
 
@@ -13,6 +13,7 @@ export class FreelancerPrice extends BaseEntity {
   @Column()
   currency: string
 
-  @OneToOne(_type => Freelancer)
+  @OneToOne(_type => Freelancer, freelancer => freelancer.price)
+  @JoinColumn()
   freelancer: Freelancer
 }

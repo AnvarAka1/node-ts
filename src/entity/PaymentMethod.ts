@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 
 import { Project } from 'src/entity/Project'
 import { Freelancer } from 'src/entity/Freelancer'
@@ -17,9 +17,11 @@ export class PaymentMethod extends BaseEntity {
   @Column()
   transfer: boolean
 
-  @OneToOne(_type => Project)
+  @OneToOne(_type => Project, project => project.paymentMethods)
+  @JoinColumn()
   project: Project
 
-  @OneToOne(_type => Freelancer)
+  @OneToOne(_type => Freelancer, freelancer => freelancer.paymentMethods)
+  @JoinColumn()
   freelancer: Freelancer
 }

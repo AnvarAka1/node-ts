@@ -7,7 +7,8 @@ import {
   ManyToOne,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn, UpdateDateColumn
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from 'typeorm'
 
 import { User } from 'src/entity/User'
@@ -26,9 +27,8 @@ export class Client extends BaseEntity {
   @ManyToOne(_type => Position, position => position.clients)
   position: Position
 
-  @OneToOne(_type => ClientReview, clientReview => clientReview.client, { nullable: true })
-  @JoinColumn()
-  review: ClientReview
+  @ManyToOne(_type => ClientReview, clientReview => clientReview.client, { nullable: true })
+  reviews: ClientReview[]
 
   @OneToMany(_type => Project, project => project.client, { nullable: true })
   projects: Project[]

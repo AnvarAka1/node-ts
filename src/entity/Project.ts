@@ -1,13 +1,14 @@
 import {
   BaseEntity,
-  Column, CreateDateColumn,
+  Column,
+  CreateDateColumn,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
   OneToOne,
-  PrimaryGeneratedColumn, UpdateDateColumn
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from 'typeorm'
 
 import { Freelancer } from 'src/entity/Freelancer'
@@ -17,8 +18,7 @@ import { Skill } from 'src/entity/Skill'
 import { Client } from 'src/entity/Client'
 import { ProjectReview } from 'src/entity/ProjectReview'
 import { ProjectPrice } from 'src/entity/ProjectPrice'
-// Project has one client and many freelancers
-// and also has one freelancer or group, that work on this project
+
 @Entity()
 export class Project extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -33,12 +33,10 @@ export class Project extends BaseEntity {
   @Column('text')
   requirement: string
 
-  @OneToOne(_type => PaymentMethod)
-  @JoinColumn()
+  @OneToOne(_type => PaymentMethod, paymentMethods => paymentMethods.project)
   paymentMethods: PaymentMethod
 
-  @OneToOne(_type => ProjectPrice)
-  @JoinColumn()
+  @OneToOne(_type => ProjectPrice, projectPrice => projectPrice.project)
   price: ProjectPrice
 
   @Column({ default: false })
@@ -82,7 +80,6 @@ export class Project extends BaseEntity {
   additionalComment?: string
 
   @OneToOne(_type => ProjectReview, projectReview => projectReview.project)
-  @JoinColumn()
   review: ProjectReview
 
   @CreateDateColumn()
