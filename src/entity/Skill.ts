@@ -25,9 +25,9 @@ export class Skill extends BaseEntity {
   @ManyToMany(_type => Project, project => project.skills)
   projects: Project[]
 
-  @CreateDateColumn()
+  @CreateDateColumn({ select: false })
   createAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   updatedAt: Date
 }

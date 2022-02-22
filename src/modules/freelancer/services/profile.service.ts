@@ -1,5 +1,5 @@
 import { Request } from 'express'
-import { getManager, getRepository, TransactionManager } from 'typeorm'
+import { getManager, getRepository } from 'typeorm'
 import bcrypt from 'bcrypt'
 
 import { Freelancer } from 'src/entity/Freelancer'
@@ -16,117 +16,115 @@ const profileDetail = async (req: Request) => {
   const freelancer = await getRepository(Freelancer)
     .createQueryBuilder('freelancer')
     .leftJoinAndSelect('freelancer.user', 'user')
+    .leftJoinAndSelect('freelancer.skills', 'skills')
+    .leftJoinAndSelect('freelancer.stack', 'stack')
+    .leftJoinAndSelect('freelancer.price', 'price')
+    .leftJoinAndSelect('freelancer.portfolio', 'portfolio')
+    .leftJoinAndSelect('freelancer.paymentMethods', 'paymentMethods')
     .where('user.id = :userId', { userId })
     .getOneOrFail()
 
   return { result: freelancer }
 }
 
-const updateGeneral = async (req: Request<unknown, unknown, User & Freelancer>) => {
+const updateGeneral = async (req: Request<unknown, unknown, Freelancer>) => {
   const userId = req.user.id
+
+  const {
+    user,
+    stack,
+    skills,
+    portfolio,
+    price,
+    paymentMethods,
+    overwork
+  } = req.body
 
   const {
     avatar,
     phone,
     firstName,
     lastName,
-    description,
-    stack,
-    skills,
-    portfolio,
-    price,
-    paymentMethods,
-    overwork,
-    age
-  } = req.body
+    age,
+    description
+  } = user
 
-  const user = await getRepository(User)
+  const userEntity = await getRepository(User)
     .createQueryBuilder('user')
     .where('user.id = :userId', { userId })
     .getOneOrFail()
 
-  user.firstName = firstName
-  user.lastName = lastName
-  user.description = description
-  user.phone = phone
-  user.avatar = avatar
-  user.age = age
+  userEntity.firstName = firstName
+  userEntity.lastName = lastName
+  userEntity.description = description
+  userEntity.phone = phone
+  userEntity.avatar = avatar
+  userEntity.age = age
 
   const freelancer = await getRepository(Freelancer)
     .createQueryBuilder('freelancer')
+    .leftJoinAndSelect('freelancer.user', 'user')
+    .leftJoinAndSelect('freelancer.skills', 'skills')
+    .leftJoinAndSelect('freelancer.stack', 'stack')
+    .leftJoinAndSelect('freelancer.price', 'price')
+    .leftJoinAndSelect('freelancer.portfolio', 'portfolio')
+    .leftJoinAndSelect('freelancer.paymentMethods', 'paymentMethods')
     .where('freelancer.userId = :userId', { userId })
     .getOneOrFail()
 
-  // const stack = await getRepository(Stack)
-  //   .createQueryBuilder('stack')
-  //   .where('stack.id = :stackId', { id: stack.id })
-  //   .getOneOrFail()
-  //
-  // const skillIds = skills.map(skill => skill.id)
-  //
-  // const skills = await getRepository(Skill)
-  //   .createQueryBuilder('skill')
-  //   .where('skill.id IN (:...skillIds)', { skillIds })
-  //   .getMany()
-  //
-  // const portfolioEntity = await getRepository(Portfolio)
-  //   .createQueryBuilder('portfolio')
-  //   .where('portfolio.id = :portfolioId', { portfolioId: freelancer.portfolio.id })
-  //   .getOne()
+  const stackEntity = await getRepository(Stack)
+    .createQueryBuilder('stack')
+    .where('stack.id = :stackId', { stackId: stack.id })
+    .getOneOrFail()
 
-  // const price = await getRepository(FreelancerPrice)
-  //   .createQueryBuilder('price')
-  //   .where('price.id = :priceId', { priceId: freelancer.price.id })
-  //   .getOne()
-  //
-  // const paymentMethods = await getRepository(PaymentMethod)
-  //   .createQueryBuilder('paymentMethod')
-  //   .where('paymentMethods.id = :paymentMethodsId', { paymentMethodsId: freelancer.paymentMethods.id })
-  //   .getOne()
+  const skillIds = skills.map(skill => skill.id)
+  const skillEntity = await getRepository(Skill)
+    .createQueryBuilder('skill')
+    .where('skill.id IN (:...skillIds)', { skillIds })
+    .getMany()
 
-  // const newPortfolio = new Portfolio()
-  //
-  // if (freelancer.portfolio) {
-  //   newPortfolio.link = portfolio.link
-  //   newPortfolio.github = portfolio.github
-  //   newPortfolio.behance = portfolio.behance
-  //   freelancer.portfolio = await newPortfolio.save()
-  // }
-  //
-  // if (!freelancer.portfolio) {
-  //
-  // }
-  // freelancer.portfolio = portfolio
-  // console.log(freelancer.portfolio)
-  //
+  const portfolioEntity = await getRepository(Portfolio)
+    .createQueryBuilder('portfolio')
+    .where('portfolio.id = :portfolioId', { portfolioId: freelancer.portfolio.id })
+    .getOneOrFail()
 
-  freelancer.portfolio.github = portfolio.github
-  freelancer.portfolio.link = portfolio.link
-  freelancer.portfolio.behance = portfolio.behance
+  const priceEntity = await getRepository(FreelancerPrice)
+    .createQueryBuilder('freelancerPrice')
+    .where('freelancerPrice.id = :priceId', { priceId: freelancer.price.id })
+    .getOneOrFail()
+
+  const paymentMethodsEntity = await getRepository(PaymentMethod)
+    .createQueryBuilder('paymentMethods')
+    .where('paymentMethods.id = :paymentMethodsId', { paymentMethodsId: freelancer.paymentMethods.id })
+    .getOneOrFail()
+
+  stackEntity.id = stack.id
+
+  portfolioEntity.link = portfolio.link
+  portfolioEntity.github = portfolio.github
+  portfolioEntity.behance = portfolio.behance
+
+  priceEntity.price = price.price
+  priceEntity.currency = price.currency
+
+  paymentMethodsEntity.cash = paymentMethods.cash
+  paymentMethodsEntity.card = paymentMethods.card
+  paymentMethodsEntity.transfer = paymentMethods.transfer
 
   freelancer.overwork = overwork
 
-  await getManager().transaction(async transactionManager => {
-    await transactionManager
-      .createQueryBuilder()
-      .update(User)
-      .set(user)
-      .where('user.id = :userId', { userId })
-      .execute()
+  const result = await getManager().transaction(async transactionManager => {
+    await transactionManager.save(userEntity)
+    await transactionManager.save(stackEntity)
+    await transactionManager.save(portfolioEntity)
+    await transactionManager.save(paymentMethodsEntity)
+    await transactionManager.save(priceEntity)
+    await transactionManager.save(skillEntity)
 
-    await transactionManager
-      .createQueryBuilder()
-      .update(Freelancer)
-      .set({
-        overwork,
-        portfolio: freelancer.portfolio
-      })
-      .where('freelancer.id = :freelancerId', { freelancerId: freelancer.id })
-      .execute()
+    return await transactionManager.save(freelancer)
   })
 
-  return {
-  }
+  return { result }
 }
 
 const updateSecurity = async (req: Request<unknown, unknown, NewPasswordDTO>) => {
@@ -141,7 +139,7 @@ const updateSecurity = async (req: Request<unknown, unknown, NewPasswordDTO>) =>
   const user = await getRepository(User)
     .createQueryBuilder('user')
     .where('user.id = :userId', { userId })
-    .addSelect('password')
+    .addSelect('user.password')
     .getOneOrFail()
 
   const passwordMatch = await bcrypt.compare(password, user.password)
