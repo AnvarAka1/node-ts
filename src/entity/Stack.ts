@@ -25,9 +25,9 @@ export class Stack extends BaseEntity {
   @OneToMany(_type => Project, project => project.stack)
   projects: Project[]
 
-  @CreateDateColumn()
+  @CreateDateColumn({ select: false })
   createAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   updatedAt: Date
 }

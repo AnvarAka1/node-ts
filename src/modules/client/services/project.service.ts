@@ -95,7 +95,6 @@ const projectCreate = async (req: Request<unknown, unknown, Project>) => {
     .andWhere('project.status = :projectStatus', { projectStatus: 'active' })
     .getManyAndCount()
 
-  console.log(clientEntity)
   if (projectCount >= 3) {
     throw Error('Cannot create more than 3 active projects.')
   }

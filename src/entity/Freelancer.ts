@@ -1,6 +1,7 @@
 import {
   BaseEntity,
-  Column, CreateDateColumn,
+  Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   JoinTable,
@@ -8,10 +9,10 @@ import {
   ManyToOne,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn, UpdateDateColumn
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from 'typeorm'
 
-import { UserType } from 'src/types'
 import { Stack } from 'src/entity/Stack'
 import { Skill } from 'src/entity/Skill'
 import { Project } from 'src/entity/Project'
@@ -44,7 +45,7 @@ export class Freelancer extends BaseEntity {
   @Column({ default: 'active' })
   status: string
 
-  @OneToOne(_type => PaymentMethod, { nullable: true })
+  @OneToOne(_type => PaymentMethod, paymentMethod => paymentMethod.freelancer)
   paymentMethods: PaymentMethod
 
   @Column()
@@ -58,7 +59,7 @@ export class Freelancer extends BaseEntity {
 
   @OneToOne(_type => User, user => user.freelancer)
   @JoinColumn()
-  user: UserType
+  user: User
 
   @CreateDateColumn()
   createAt: Date
