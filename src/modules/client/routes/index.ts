@@ -1,14 +1,14 @@
 import { Router } from 'express'
 
 import projectController from '../controllers/project.controller'
+import freelancerController from '../controllers/freelancer.controller'
 
 const router = Router()
 
-router.get('/freelancers/list')
-router.get('/freelancers/:id/detail')
-router.get('/freelancers/:id/projects/list')
-router.post('/freelancers/:id/request-projects')
-router.delete('/freelancers/:id/remove-projects')
+router.get('/freelancers/list', freelancerController.freelancerList)
+router.get('/freelancers/:id/detail', freelancerController.freelancerDetail)
+router.get('/freelancers/:id/projects/list', freelancerController.projectList)
+router.post('/freelancers/:id/request-projects/send', freelancerController.projectRequestSend)
 
 router.post('/projects/create', projectController.projectCreate)
 router.put('/projects/:id/update', projectController.projectUpdate)

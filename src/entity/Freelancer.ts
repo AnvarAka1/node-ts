@@ -36,6 +36,9 @@ export class Freelancer extends BaseEntity {
   @OneToMany(_type => Project, project => project.freelancer)
   projects: Project[]
 
+  @OneToMany(_type => Project, project => project.requestedFreelancer)
+  projectOffers: Project[]
+
   @ManyToMany(_type => Project, project => project.candidates)
   requestedProjects: Project[]
 
