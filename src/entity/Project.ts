@@ -60,6 +60,9 @@ export class Project extends BaseEntity {
   @Column({ nullable: true })
   file: string
 
+  @ManyToOne(_type => Freelancer, freelancer => freelancer.projectOffers)
+  requestedFreelancer: Freelancer
+
   @ManyToMany(
     _type => Freelancer,
     freelancer => freelancer.requestedProjects,
