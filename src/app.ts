@@ -6,7 +6,7 @@ import { createConnection } from 'typeorm'
 import cookieParser from 'cookie-parser'
 
 import seeds from './seed'
-import routes from './modules/routes'
+import routes from './modules'
 
 const PORT = 8000;
 
