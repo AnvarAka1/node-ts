@@ -21,9 +21,9 @@ export class Position extends BaseEntity {
   @OneToMany(_type => Client, client => client.position)
   clients: Client[]
 
-  @CreateDateColumn()
+  @CreateDateColumn({ select: false })
   createAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   updatedAt: Date
 }

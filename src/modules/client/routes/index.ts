@@ -2,6 +2,7 @@ import { Router } from 'express'
 
 import projectController from '../controllers/project.controller'
 import freelancerController from '../controllers/freelancer.controller'
+import profileController from '../controllers/profile.controller'
 
 const router = Router()
 
@@ -14,7 +15,10 @@ router.post('/projects/create', projectController.projectCreate)
 router.put('/projects/:id/update', projectController.projectUpdate)
 router.get('/projects/list', projectController.projectList)
 router.get('/projects/:id/detail', projectController.projectDetail)
-
 router.get('/my-projects/list', projectController.myProjectList)
+
+router.get('/profile/detail', profileController.profileDetail)
+router.put('/profile/general/update', profileController.generalUpdate)
+router.put('/profile/security/update', profileController.securityUpdate)
 
 export default router

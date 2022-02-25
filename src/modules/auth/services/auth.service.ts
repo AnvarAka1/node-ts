@@ -145,10 +145,6 @@ export const signIn = async (req: Request<unknown, unknown, User>) => {
       .addSelect('user.password')
       .getOneOrFail()
 
-    if (!user) {
-      throw Error('Invalid email or password.')
-    }
-
     const isPasswordMatch = await compare(password, user.password)
     if (!isPasswordMatch) {
       throw Error('Invalid email or password.')
