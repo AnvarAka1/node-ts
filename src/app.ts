@@ -4,6 +4,7 @@ import express, { json, NextFunction, Request, Response, urlencoded } from 'expr
 import helmet from 'helmet'
 import { createConnection } from 'typeorm'
 import cookieParser from 'cookie-parser'
+import expressStatusMonitor from 'express-status-monitor'
 
 import seeds from './seed'
 import routes from './modules'
@@ -17,6 +18,7 @@ const PORT = 8000;
 
 const app = express()
 
+app.use(expressStatusMonitor())
 app.use(cookieParser())
 app.use(helmet())
 

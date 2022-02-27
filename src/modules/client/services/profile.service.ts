@@ -6,7 +6,7 @@ import { Client } from 'src/entity/Client'
 import { getUser } from 'src/shared/user'
 import { NewPasswordDTO } from 'src/types'
 
-import { getProfile } from '../shared/profile'
+import { getProfile } from '../repositories/profile.repository'
 
 const profileDetail = async (req: Request) => {
   const userId = req.user.id
