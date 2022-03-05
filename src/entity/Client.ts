@@ -10,6 +10,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
+import { Length } from 'class-validator'
 
 import { User } from 'src/entity/User'
 import { ClientReview } from 'src/entity/ClientReview'
@@ -22,6 +23,7 @@ export class Client extends BaseEntity {
   id: number
 
   @Column()
+  @Length(2, 20)
   companyName: string
 
   @ManyToOne(_type => Position, position => position.clients)

@@ -1,5 +1,6 @@
 import { Request } from 'express'
 import { getManager, getRepository, In } from 'typeorm'
+import { validateOrReject } from 'class-validator'
 
 import { Project } from 'src/entity/Project'
 import { ProjectPrice } from 'src/entity/ProjectPrice'
@@ -102,7 +103,7 @@ const projectCreate = async (req: Request<unknown, unknown, Project>) => {
   const skillsEntity = await skillRepository.find({ id: In(skillIds) })
   const stackEntity = await stackRepository.findOne({ id: stack.id })
 
-  await getManager().transaction(async transactionManager => {
+  const createdProject = await getManager().transaction(async transactionManager => {
     const priceEntity = await transactionManager.save(newProjectPrice)
     const paymentMethodsEntity = await transactionManager.save(newPaymentMethods)
 
@@ -121,8 +122,10 @@ const projectCreate = async (req: Request<unknown, unknown, Project>) => {
       stack: stackEntity
     })
 
-    await transactionManager.save(project)
+    await validateOrReject(project)
+    return await transactionManager.save(project)
   })
+  return { result: { id: createdProject.id } }
 }
 
 const projectUpdate = async (req: Request<{ id: string }, unknown, Project>) => {
@@ -149,17 +152,6 @@ const projectUpdate = async (req: Request<{ id: string }, unknown, Project>) => 
   const stackRepository = getRepository(Stack)
   const paymentMethodsRepository = getRepository(PaymentMethod)
 
-  const newProjectPrice = projectPriceRepository.create({
-    price: price.price,
-    currency: price.currency
-  })
-
-  const newPaymentMethods = paymentMethodsRepository.create({
-    card: paymentMethods.card,
-    cash: paymentMethods.cash,
-    transfer: paymentMethods.transfer
-  })
-
   const skillIds = skills.map(skill => skill.id)
 
   const clientEntity = await clientRepository.findOneOrFail({
@@ -170,10 +162,21 @@ const projectUpdate = async (req: Request<{ id: string }, unknown, Project>) => 
   const skillsEntity = await skillRepository.find({ id: In(skillIds) })
   const stackEntity = await stackRepository.findOneOrFail({ id: stack.id })
   const projectEntity = await projectRepository.findOneOrFail({ id })
+  const projectId = projectEntity.id
+  const paymentMethodEntity = await paymentMethodsRepository.findOneOrFail({ project: { id: projectId } })
+  const projectPriceEntity = await projectPriceRepository.findOneOrFail({ project: { id: projectId } })
 
-  await getManager().transaction(async transactionManager => {
-    const priceEntity = await transactionManager.save(newProjectPrice)
-    const paymentMethodsEntity = await transactionManager.save(newPaymentMethods)
+  paymentMethodEntity.card = paymentMethods.card
+  paymentMethodEntity.cash = paymentMethods.cash
+  paymentMethodEntity.transfer = paymentMethods.transfer
+
+  projectPriceEntity.price = price.price
+  projectPriceEntity.currency = price.currency
+  const updatedProject = await getManager().transaction(async transactionManager => {
+    await validateOrReject(projectPriceEntity)
+    await validateOrReject(paymentMethodEntity)
+    const priceEntity = await transactionManager.save(projectPriceEntity)
+    const paymentMethodsEntity = await transactionManager.save(paymentMethodEntity)
 
     projectEntity.name = name
     projectEntity.file = file
@@ -188,8 +191,11 @@ const projectUpdate = async (req: Request<{ id: string }, unknown, Project>) => 
     projectEntity.skills = skillsEntity
     projectEntity.stack = stackEntity
 
-    await transactionManager.save(projectEntity)
+    await validateOrReject(projectEntity)
+    return await transactionManager.save(projectEntity)
   })
+
+  return { result: updatedProject }
 }
 
 export default {
