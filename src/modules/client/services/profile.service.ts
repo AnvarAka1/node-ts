@@ -1,6 +1,7 @@
 import { Request } from 'express'
 import { getManager } from 'typeorm'
 import bcrypt from 'bcrypt'
+import { validateOrReject } from 'class-validator'
 
 import { Client } from 'src/entity/Client'
 import { getUser } from 'src/shared/user'
@@ -47,6 +48,8 @@ const generalUpdate = async (req: Request<unknown, unknown, Client>) => {
   userEntity.fullName = `${firstName} ${lastName}`
 
   await getManager().transaction(async transactionManager => {
+    await validateOrReject(userEntity)
+    await validateOrReject(clientEntity)
     await transactionManager.save(userEntity)
     await transactionManager.save(clientEntity)
   })
@@ -77,6 +80,7 @@ const securityUpdate = async (req: Request<unknown, unknown, NewPasswordDTO>) =>
 
   user.password = await bcrypt.hash(newPassword, 12)
 
+  await validateOrReject(user)
   await user.save()
 
   return { result: null }

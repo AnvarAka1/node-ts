@@ -1,11 +1,11 @@
 import { Request } from 'express'
 import { getManager, getRepository } from 'typeorm'
 import bcrypt from 'bcrypt'
+import { validateOrReject } from 'class-validator'
 
 import { Freelancer } from 'src/entity/Freelancer'
 import { User } from 'src/entity/User'
 import { NewPasswordDTO } from 'src/types'
-import { Stack } from 'src/entity/Stack'
 import { Portfolio } from 'src/entity/Portfolio'
 import { FreelancerPrice } from 'src/entity/FreelancerPrice'
 import { Skill } from 'src/entity/Skill'
@@ -72,11 +72,6 @@ const updateGeneral = async (req: Request<unknown, unknown, Freelancer>) => {
     .where('freelancer.userId = :userId', { userId })
     .getOneOrFail()
 
-  const stackEntity = await getRepository(Stack)
-    .createQueryBuilder('stack')
-    .where('stack.id = :stackId', { stackId: stack.id })
-    .getOneOrFail()
-
   const skillIds = skills.map(skill => skill.id)
   const skillEntity = await getRepository(Skill)
     .createQueryBuilder('skill')
@@ -98,7 +93,8 @@ const updateGeneral = async (req: Request<unknown, unknown, Freelancer>) => {
     .where('paymentMethods.id = :paymentMethodsId', { paymentMethodsId: freelancer.paymentMethods.id })
     .getOneOrFail()
 
-  stackEntity.id = stack.id
+  freelancer.stack.id = stack.id
+  freelancer.skills = skillEntity
 
   portfolioEntity.link = portfolio.link
   portfolioEntity.github = portfolio.github
@@ -114,13 +110,16 @@ const updateGeneral = async (req: Request<unknown, unknown, Freelancer>) => {
   freelancer.overwork = overwork
 
   const result = await getManager().transaction(async transactionManager => {
+    await validateOrReject(userEntity)
+    await validateOrReject(portfolioEntity)
+    await validateOrReject(paymentMethodsEntity)
+    await validateOrReject(priceEntity)
     await transactionManager.save(userEntity)
-    await transactionManager.save(stackEntity)
     await transactionManager.save(portfolioEntity)
     await transactionManager.save(paymentMethodsEntity)
     await transactionManager.save(priceEntity)
-    await transactionManager.save(skillEntity)
 
+    await validateOrReject(freelancer)
     return await transactionManager.save(freelancer)
   })
 
@@ -154,6 +153,7 @@ const updateSecurity = async (req: Request<unknown, unknown, NewPasswordDTO>) =>
 
   user.password = await bcrypt.hash(newPassword, 12)
 
+  await validateOrReject(user)
   await user.save()
 
   return { result: null }

@@ -8,9 +8,11 @@ export class ProjectPrice extends BaseEntity {
   id: number
 
   @Column('double')
+  // min price is 1
   price: number
 
   @Column()
+  // must contain something
   currency: string
 
   @OneToOne(_type => Project, project => project.price)

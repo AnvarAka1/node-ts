@@ -36,8 +36,10 @@ app.use(routes)
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use(function (err: Record<string, unknown>, req: Request, res: Response, next: NextFunction) {
   // eslint-disable-next-line no-console
-  console.error(err.stack)
-  const errorMessage = 'Internal server error.'
+  console.error('error', err)
+  // eslint-disable-next-line no-console
+  console.error('error stack', err.stack)
+  const errorMessage = err || 'Internal server error.'
   res.status(500).send({ err: errorMessage })
 })
 

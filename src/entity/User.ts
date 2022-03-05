@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn
 } from 'typeorm'
+import { IsEmail, Length } from 'class-validator'
 
 import { Freelancer } from 'src/entity/Freelancer'
 import { Client } from 'src/entity/Client'
@@ -20,6 +21,7 @@ export class User extends BaseEntity {
   role: string
 
   @Column()
+  @IsEmail()
   email: string
 
   @Column({ select: false })
@@ -29,9 +31,11 @@ export class User extends BaseEntity {
   avatar: string
 
   @Column()
+  @Length(2, 20)
   firstName: string
 
   @Column()
+  @Length(2, 20)
   lastName: string
 
   @Column()
