@@ -7,13 +7,13 @@ export class Portfolio extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column({ default: '' })
   github: string
 
-  @Column()
+  @Column({ default: '' })
   behance: string
 
-  @Column()
+  @Column({ default: '' })
   link: string
 
   @OneToOne(_type => Freelancer, freelancer => freelancer.portfolio)

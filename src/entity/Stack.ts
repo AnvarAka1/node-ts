@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
+import { Length } from 'class-validator'
 
 import { Freelancer } from 'src/entity/Freelancer'
 import { Project } from 'src/entity/Project'
@@ -17,6 +18,7 @@ export class Stack extends BaseEntity {
   id: number
 
   @Column()
+  @Length(3, 20)
   name: string
 
   @OneToMany(_type => Freelancer, freelancer => freelancer.stack)

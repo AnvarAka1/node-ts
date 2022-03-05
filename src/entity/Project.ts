@@ -33,11 +33,9 @@ export class Project extends BaseEntity {
   @Column('text')
   requirement: string
 
-  // validation
   @OneToOne(_type => PaymentMethod, paymentMethods => paymentMethods.project)
   paymentMethods: PaymentMethod
 
-  // validation
   @OneToOne(_type => ProjectPrice, projectPrice => projectPrice.project)
   price: ProjectPrice
 

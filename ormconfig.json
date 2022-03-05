@@ -1,0 +1,48 @@
+[
+  {
+    "name": "default",
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "5aC8Ju8filkcsEKKHfVJIkh2SWbSkYJt",
+    "database": "worklance",
+    "logging": false,
+    "entities": [
+      "src/entity/**/*.ts"
+    ],
+    "migrations": [
+      "src/migration/**/*.ts"
+    ],
+    "cli": {
+      "migrationDir": "src/migration"
+    },
+    "subscribers": [
+      "src/subscriber/**/*.ts"
+    ],
+    "synchronize": true
+  },
+  {
+    "name": "testing",
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "5aC8Ju8filkcsEKKHfVJIkh2SWbSkYJt",
+    "database": "worklance-testing",
+    "logging": false,
+    "entities": [
+      "src/entity/**/*.ts"
+    ],
+    "migrations": [
+      "src/migration/**/*.ts"
+    ],
+    "cli": {
+      "migrationDir": "src/migration"
+    },
+    "subscribers": [
+      "src/subscriber/**/*.ts"
+    ],
+    "synchronize": true
+  }
+]

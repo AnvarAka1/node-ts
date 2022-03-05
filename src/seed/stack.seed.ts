@@ -4,8 +4,8 @@ import { Stack } from 'src/entity/Stack'
 
 import stackFixture from './fixtures/stack.fixture.json'
 
-export default async () => {
-  const stackRepository = getRepository(Stack)
+export default async (connectionName: string) => {
+  const stackRepository = getRepository(Stack, connectionName)
 
   const stack = await stackRepository.findOne()
 
