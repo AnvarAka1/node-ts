@@ -1,5 +1,3 @@
-import { Connection } from 'typeorm'
-
 import adminSeed from './admin.seed'
 import stackSeed from './stack.seed'
 import positionSeed from './position.seed'

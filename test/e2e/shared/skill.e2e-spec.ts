@@ -2,10 +2,10 @@ import request from 'supertest'
 
 import app from 'src/app'
 
-describe('Position list', function () {
-  it('should return 4 positions', async function () {
+describe('Skill list', function () {
+  it('should return 4 skills', async function () {
     const res = await request(app)
-      .get('/v1/positions/list/')
+      .get('/v1/skills/list/')
     expect(res.status).toEqual(200)
     return expect(res.body.results).toHaveLength(6)
   })

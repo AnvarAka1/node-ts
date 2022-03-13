@@ -6,6 +6,8 @@ module.exports = {
   plugins: [
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
-    'babel-plugin-transform-typescript-metadata'
+    'babel-plugin-transform-typescript-metadata',
+    ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
+
   ]
 }

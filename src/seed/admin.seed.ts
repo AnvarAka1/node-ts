@@ -1,4 +1,4 @@
-import { Connection, getRepository } from 'typeorm'
+import { getRepository } from 'typeorm'
 import { hash } from 'bcrypt'
 
 import { User } from 'src/entity/User'

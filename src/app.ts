@@ -12,18 +12,17 @@ const app = express()
 app.use(expressStatusMonitor())
 app.use(cookieParser())
 app.use(helmet())
-//
 app.use(urlencoded({ extended: true }))
 app.use(json())
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   // eslint-disable-next-line no-console
-  console.log(req.body)
+  // console.log(req.body)
   next()
 })
 
 app.use(routes)
-console.log('I am running, man')
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use(function (err: Record<string, unknown>, req: Request, res: Response, next: NextFunction) {
   // eslint-disable-next-line no-console

@@ -1,4 +1,4 @@
-import { Connection, createConnection, QueryRunner } from 'typeorm'
+import { Connection, createConnection, getConnectionOptions, QueryRunner } from 'typeorm'
 
 import seeds from 'src/seed'
 
@@ -8,23 +8,17 @@ let connection: Connection
 let queryRunner: QueryRunner
 
 beforeAll(async () => {
-  connection = await createConnection(TEST_CONNECTION_NAME)
-  // queryRunner = connection.createQueryRunner('master')
-  // await queryRunner.clearDatabase()
-  await seeds(TEST_CONNECTION_NAME)
+  const connectionOptions = await getConnectionOptions(TEST_CONNECTION_NAME)
+  connection = await createConnection({ ...connectionOptions, name: 'default' })
+  queryRunner = connection.createQueryRunner('master')
+  await seeds()
 })
 
 beforeEach(async () => {
-  await seeds(TEST_CONNECTION_NAME)
-})
-
-afterEach(async () => {
-  // await queryRunner.clearDatabase()
+  await seeds()
 })
 
 afterAll(async () => {
+  await queryRunner.clearDatabase()
   await connection.close()
 })
-
-// TODO drop all tables in db afterAll
-//  finish beforeAll
