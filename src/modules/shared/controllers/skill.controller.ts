@@ -4,9 +4,9 @@ import skillService from '../services/skill.service'
 
 const list = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await skillService.list(req)
+    const results = await skillService.list(req)
 
-    return res.status(200).json(result)
+    return res.status(200).json(results)
   } catch (error) {
     next(error)
   }

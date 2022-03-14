@@ -21,4 +21,5 @@ beforeEach(async () => {
 afterAll(async () => {
   await queryRunner.clearDatabase()
   await connection.close()
+  await new Promise(resolve => setTimeout(() => resolve(''), 500))
 })

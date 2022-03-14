@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/server.ts",
     "lint": "yarn run eslint . --ext .js,.ts",
-    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles --config ./test/config/jest-e2e.config.ts"
+    "test": "set NODE_ENV=test && jest --runInBand --detectOpenHandles --config ./test/config/jest-e2e.config.ts"
   },
   "repository": {
     "type": "git",
