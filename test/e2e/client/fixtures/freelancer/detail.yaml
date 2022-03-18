@@ -1,0 +1,24 @@
+entity: Freelancer
+items:
+ freelancer:
+  id: 1
+  stack:
+   id: 1
+   name: 'Front-end developer'
+  skills:
+   -
+    id: 1
+    name: 'ReactJS'
+   -
+    id: 2
+    name: 'Javascript'
+  status: 'active'
+  paymentMethods:
+   cash: true
+   card: false
+   transfer: false
+  price:
+   price: 20
+   currency: 'usd'
+  user:
+   id: 4

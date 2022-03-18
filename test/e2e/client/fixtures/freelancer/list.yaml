@@ -1,0 +1,70 @@
+entity: Freelancer
+items:
+ freelancer1:
+  id: 1
+  stack:
+   id: 1
+   name: 'Front-end developer'
+  skills:
+   -
+    id: 1
+    name: 'ReactJS'
+   -
+    id: 2
+    name: 'Javascript'
+  status: 'active'
+  paymentMethods:
+   cash: true
+   card: false
+   transfer: false
+  price:
+   price: 20
+   currency: 'usd'
+  user:
+   id: 5
+
+ freelancer2:
+  id: 2
+  stack:
+   id: 2
+   name: 'Back-end developer'
+  skills:
+   -
+    id: 3
+    name: 'NodeJS'
+   -
+    id: 2
+    name: 'Javascript'
+  status: 'active'
+  paymentMethods:
+   cash: true
+   card: false
+   transfer: false
+  price:
+   price: 20
+   currency: 'usd'
+  user:
+   id: 6
+
+ freelancer3:
+  id: 3
+  stack:
+   id: 1
+   name: 'Front-end developer'
+  skills:
+   -
+    id: 1
+    name: 'ReactJS'
+   -
+    id: 2
+    name: 'Javascript'
+  status: 'active'
+  paymentMethods:
+   cash: true
+   card: false
+   transfer: false
+  price:
+   price: 20
+   currency: 'usd'
+  user:
+   id: 7

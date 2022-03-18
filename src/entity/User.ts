@@ -38,7 +38,7 @@ export class User extends BaseEntity {
   @Length(2, 20)
   lastName: string
 
-  @Column()
+  @Column({ default: '' })
   fullName: string
 
   @Column({ default: '' })
@@ -57,7 +57,7 @@ export class User extends BaseEntity {
   client: Client
 
   @CreateDateColumn()
-  createAt: Date
+  createdAt: Date
 
   @UpdateDateColumn()
   updatedAt: Date

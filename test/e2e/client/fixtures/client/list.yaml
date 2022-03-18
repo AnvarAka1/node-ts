@@ -1,0 +1,28 @@
+entity: Client
+items:
+ client1:
+  id: 1
+  companyName: 'Good company'
+  position:
+   id: 1
+   name: CEO
+  user:
+   id: 2
+
+ client2:
+  id: 2
+  companyName: 'Random company'
+  position:
+   id: 2
+   name: CTO
+  user:
+   id: 3
+
+ client3:
+  id: 3
+  companyName: 'My company'
+  position:
+   id: 3
+   name: CFO
+  user:
+   id: 4

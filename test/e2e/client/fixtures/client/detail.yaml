@@ -1,0 +1,10 @@
+entity: Client
+items:
+ client:
+  id: 1
+  companyName: 'Good company'
+  position:
+   id: 1
+   name: CEO
+  user:
+   id: 2
