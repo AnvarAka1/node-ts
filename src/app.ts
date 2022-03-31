@@ -29,8 +29,9 @@ app.use(function (err: Record<string, unknown>, req: Request, res: Response, nex
   console.error('error', err)
   // eslint-disable-next-line no-console
   console.error('error stack', err.stack)
-  const errorMessage = err || 'Internal server error.'
-  res.status(500).send({ err: errorMessage })
+  const message = err.message
+  const errorMessage = message || 'Internal server error.'
+  res.status(500).send({ error: errorMessage })
 })
 
 export default app

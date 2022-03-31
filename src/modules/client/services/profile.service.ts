@@ -1,5 +1,5 @@
 import { Request } from 'express'
-import { getManager } from 'typeorm'
+import { getManager, getRepository } from 'typeorm'
 import bcrypt from 'bcrypt'
 import { validateOrReject } from 'class-validator'
 
@@ -36,6 +36,7 @@ const generalUpdate = async (req: Request<unknown, unknown, Client>) => {
   const userEntity = await getUser(userId)
   const clientEntity = await getProfile(userId)
 
+  const clientId = clientEntity.id
   clientEntity.companyName = companyName
   clientEntity.position.id = position.id
 
@@ -47,14 +48,22 @@ const generalUpdate = async (req: Request<unknown, unknown, Client>) => {
   userEntity.lastName = lastName
   userEntity.fullName = `${firstName} ${lastName}`
 
-  await getManager().transaction(async transactionManager => {
-    await validateOrReject(userEntity)
-    await validateOrReject(clientEntity)
-    await transactionManager.save(userEntity)
-    await transactionManager.save(clientEntity)
-  })
+  await getManager()
+    .transaction(async transactionManager => {
+      await validateOrReject(userEntity)
+      await validateOrReject(clientEntity)
+      await transactionManager.save(userEntity)
+      await transactionManager.save(clientEntity)
+    })
 
-  return {}
+  const result = await getRepository(Client)
+    .createQueryBuilder('client')
+    .where('client.id = :clientId', { clientId })
+    .leftJoinAndSelect('client.user', 'user')
+    .leftJoinAndSelect('client.position', 'position')
+    .getOneOrFail()
+
+  return { result }
 }
 
 const securityUpdate = async (req: Request<unknown, unknown, NewPasswordDTO>) => {

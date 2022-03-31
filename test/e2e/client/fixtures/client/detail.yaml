@@ -5,6 +5,5 @@ items:
   companyName: 'Good company'
   position:
    id: 1
-   name: CEO
   user:
    id: 2

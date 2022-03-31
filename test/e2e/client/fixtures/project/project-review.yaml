@@ -1,0 +1,19 @@
+entity: ProjectReview
+items:
+ review1:
+  id: 1
+  stars: 4
+  comment: 'Was a great pleasure to work on this project!'
+  project:
+   id: 1
+  createdAt: '2022-03-06 17:14:47.736982'
+  updatedAt: '2022-03-06 17:14:47.736982'
+
+ review2:
+  id: 2
+  stars: 5
+  comment: 'Was great to work on this project!'
+  project:
+   id: 2
+  createdAt: '2022-03-07 17:14:47.736982'
+  updatedAt: '2022-03-07 17:14:47.736982'

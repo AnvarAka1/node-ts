@@ -4,7 +4,7 @@ items:
   id: 2
   role: 'client'
   email: 'client@gmail.com'
-  password: ''
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
   avatar: 'hello.jpg'
   firstName: 'Client'
   lastName: 'Clientovich'
@@ -16,7 +16,7 @@ items:
   id: 3
   role: 'client'
   email: 'client2@gmail.com'
-  password: ''
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
   avatar: 'hello2.jpg'
   firstName: 'Client2'
   lastName: 'Clientovich2'
@@ -28,7 +28,7 @@ items:
   id: 4
   role: 'client'
   email: 'client3@gmail.com'
-  password: ''
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
   avatar: 'hello3.jpg'
   firstName: 'Client3'
   lastName: 'Clientovich3'
@@ -40,7 +40,7 @@ items:
   id: 5
   role: 'freelancer'
   email: 'freelancer@gmail.com'
-  password: ''
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
   avatar: 'hi.jpg'
   firstName: 'Freelancer'
   lastName: 'Freelancerovich'
@@ -52,7 +52,7 @@ items:
   id: 6
   role: 'freelancer'
   email: 'freelancer2@gmail.com'
-  password: ''
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
   avatar: 'hi2.jpg'
   firstName: 'Freelancer2'
   lastName: 'Freelancerovich2'
@@ -64,7 +64,7 @@ items:
   id: 7
   role: 'freelancer'
   email: 'freelancer3@gmail.com'
-  password: ''
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
   avatar: 'hi3.jpg'
   firstName: 'Freelancer3'
   lastName: 'Freelancerovich3'

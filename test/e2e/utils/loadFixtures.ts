@@ -15,11 +15,13 @@ export const loadYaml = (yamlPath: string) => {
   return yaml.load(fs.readFileSync(yamlPath).toString())
 }
 
+export const baseFixturesPath = path.resolve('test', 'e2e')
+
 export const loadFixtures = async (fixturesPath: string): Promise<void> => {
   const connection: Connection = getConnection()
 
   const loader = new Loader()
-  loader.load(path.resolve(fixturesPath))
+  loader.load(path.resolve(baseFixturesPath, fixturesPath))
 
   const resolver = new Resolver()
   const fixtures = resolver.resolve(loader.fixtureConfigs)

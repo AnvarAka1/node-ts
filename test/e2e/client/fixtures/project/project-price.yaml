@@ -1,0 +1,14 @@
+entity: ProjectPrice
+items:
+ price1:
+  id: 1
+  price: 20
+  currency: 'usd'
+  project:
+   id: 1
+ price2:
+  id: 2
+  price: 30000
+  currency: 'uzs'
+  project:
+   id: 2

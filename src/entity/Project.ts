@@ -12,7 +12,7 @@ import {
 } from 'typeorm'
 
 import { Freelancer } from 'src/entity/Freelancer'
-import { PaymentMethod } from 'src/entity/PaymentMethod'
+import { ProjectPaymentMethod } from 'src/entity/ProjectPaymentMethod'
 import { Stack } from 'src/entity/Stack'
 import { Skill } from 'src/entity/Skill'
 import { Client } from 'src/entity/Client'
@@ -33,8 +33,8 @@ export class Project extends BaseEntity {
   @Column('text')
   requirement: string
 
-  @OneToOne(_type => PaymentMethod, paymentMethods => paymentMethods.project)
-  paymentMethods: PaymentMethod
+  @OneToOne(_type => ProjectPaymentMethod, paymentMethods => paymentMethods.project)
+  paymentMethods: ProjectPaymentMethod
 
   @OneToOne(_type => ProjectPrice, projectPrice => projectPrice.project)
   price: ProjectPrice

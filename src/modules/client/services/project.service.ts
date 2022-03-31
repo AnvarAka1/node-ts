@@ -6,7 +6,7 @@ import { Project } from 'src/entity/Project'
 import { ProjectPrice } from 'src/entity/ProjectPrice'
 import { Stack } from 'src/entity/Stack'
 import { Skill } from 'src/entity/Skill'
-import { PaymentMethod } from 'src/entity/PaymentMethod'
+import { ProjectPaymentMethod } from 'src/entity/ProjectPaymentMethod'
 import { Client } from 'src/entity/Client'
 import { getPaginatedList } from 'src/utils/pagination'
 
@@ -70,14 +70,14 @@ const projectCreate = async (req: Request<unknown, unknown, Project>) => {
   const projectPriceRepository = getRepository(ProjectPrice)
   const skillRepository = getRepository(Skill)
   const stackRepository = getRepository(Stack)
-  const paymentMethodsRepository = getRepository(PaymentMethod)
+  const projectPaymentMethodRepository = getRepository(ProjectPaymentMethod)
 
   const newProjectPrice = projectPriceRepository.create({
     price: price.price,
     currency: price.currency
   })
 
-  const newPaymentMethods = paymentMethodsRepository.create({
+  const newPaymentMethods = projectPaymentMethodRepository.create({
     card: paymentMethods.card,
     cash: paymentMethods.cash,
     transfer: paymentMethods.transfer
@@ -150,7 +150,7 @@ const projectUpdate = async (req: Request<{ id: string }, unknown, Project>) => 
   const projectPriceRepository = getRepository(ProjectPrice)
   const skillRepository = getRepository(Skill)
   const stackRepository = getRepository(Stack)
-  const paymentMethodsRepository = getRepository(PaymentMethod)
+  const paymentMethodsRepository = getRepository(ProjectPaymentMethod)
 
   const skillIds = skills.map(skill => skill.id)
 

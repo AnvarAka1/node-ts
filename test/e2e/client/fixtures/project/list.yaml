@@ -1,0 +1,87 @@
+entity: Project
+items:
+ project1:
+  id: 1
+  name: 'Html css'
+  description: 'Html project'
+  requirement: 'Make the project'
+  paymentMethods:
+   id: 1
+  price:
+   id: 1
+  overwork: true
+  stack:
+   id: 1
+  skills:
+   - id: 2
+   - id: 3
+  status: 'closed'
+  reassessment: true
+  file: 'https://'
+  requestedFreelancer: null
+  candidates: null
+  freelancer: null
+  client:
+   id: 1
+  additionalComment: 'Very simple'
+  review:
+   id: 1
+  createdAt: '2022-03-05 17:14:47.736982'
+  updatedAt: '2022-03-05 17:29:52.000000'
+
+ project2:
+  id: 2
+  name: 'Backend'
+  description: 'Backend project'
+  requirement: 'Make the project'
+  paymentMethods:
+   id: 2
+  price:
+   id: 2
+  overwork: false
+  stack:
+   id: 2
+  skills:
+   - id: 4
+   - id: 3
+  status: 'closed'
+  reassessment: false
+  file: 'https://'
+  requestedFreelancer: null
+  candidates: null
+  freelancer: null
+  client:
+   id: 1
+  additionalComment: 'Very hard'
+  review:
+   id: 2
+  createdAt: '2022-03-05 17:14:47.736982'
+  updatedAt: '2022-03-05 17:29:52.000000'
+
+ project3:
+  id: 3
+  name: 'React project'
+  description: 'React is the best'
+  requirement: 'Make the project please'
+  paymentMethods:
+   id: 1
+  price:
+   id: 1
+  overwork: true
+  stack:
+   id: 1
+  skills:
+   - id: 2
+   - id: 3
+  status: 'open'
+  reassessment: true
+  file: 'https://'
+  requestedFreelancer: null
+  candidates: null
+  freelancer: null
+  client:
+   id: 2
+  additionalComment: 'Very simple'
+  review: null
+  createdAt: '2022-03-05 17:14:47.736982'
+  updatedAt: '2022-03-05 17:29:52.000000'

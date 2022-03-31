@@ -1,0 +1,14 @@
+entity: ProjectPaymentMethod
+items:
+ paymentMethod1:
+  id: 1
+  cash: true
+  card: true
+  transfer: true
+  project: 1
+ paymentMethod2:
+  id: 1
+  cash: true
+  card: true
+  transfer: false
+  project: 2

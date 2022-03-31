@@ -9,7 +9,7 @@ import { NewPasswordDTO } from 'src/types'
 import { Portfolio } from 'src/entity/Portfolio'
 import { FreelancerPrice } from 'src/entity/FreelancerPrice'
 import { Skill } from 'src/entity/Skill'
-import { PaymentMethod } from 'src/entity/PaymentMethod'
+import { FreelancerPaymentMethod } from 'src/entity/FreelancerPaymentMethod'
 
 const profileDetail = async (req: Request) => {
   const userId = req.user.id
@@ -88,7 +88,7 @@ const updateGeneral = async (req: Request<unknown, unknown, Freelancer>) => {
     .where('freelancerPrice.id = :priceId', { priceId: freelancer.price.id })
     .getOneOrFail()
 
-  const paymentMethodsEntity = await getRepository(PaymentMethod)
+  const paymentMethodsEntity = await getRepository(FreelancerPaymentMethod)
     .createQueryBuilder('paymentMethods')
     .where('paymentMethods.id = :paymentMethodsId', { paymentMethodsId: freelancer.paymentMethods.id })
     .getOneOrFail()
