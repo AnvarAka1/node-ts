@@ -11,7 +11,7 @@ import { Stack } from 'src/entity/Stack'
 import { Skill } from 'src/entity/Skill'
 import { Position } from 'src/entity/Position'
 import { generateJwtToken } from 'src/libs/jwt'
-import { PaymentMethod } from 'src/entity/PaymentMethod'
+import { FreelancerPaymentMethod } from 'src/entity/FreelancerPaymentMethod'
 import { Portfolio } from 'src/entity/Portfolio'
 import { FreelancerPrice } from 'src/entity/FreelancerPrice'
 
@@ -54,10 +54,10 @@ export const signUp = async (req: Request<unknown, unknown, User & Freelancer & 
     const freelancerRepository = getRepository(Freelancer)
     const stackRepository = getRepository(Stack)
     const skillRepository = getRepository(Skill)
-    const paymentMethodRepository = getRepository(PaymentMethod)
+    const freelancerPaymentMethodRepository = getRepository(FreelancerPaymentMethod)
     const portfolioRepository = getRepository(Portfolio)
     const priceRepository = getRepository(FreelancerPrice)
-    const paymentMethods = paymentMethodRepository.create({
+    const paymentMethods = freelancerPaymentMethodRepository.create({
       cash: true,
       card: false,
       transfer: false

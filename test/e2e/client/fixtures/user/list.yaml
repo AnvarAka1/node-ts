@@ -1,0 +1,73 @@
+entity: User
+items:
+ user1:
+  id: 2
+  role: 'client'
+  email: 'client@gmail.com'
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
+  avatar: 'hello.jpg'
+  firstName: 'Client'
+  lastName: 'Clientovich'
+  phone: '+123'
+  description: ''
+  age: 25
+
+ user2:
+  id: 3
+  role: 'client'
+  email: 'client2@gmail.com'
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
+  avatar: 'hello2.jpg'
+  firstName: 'Client2'
+  lastName: 'Clientovich2'
+  phone: '+1234'
+  description: ''
+  age: 26
+
+ user3:
+  id: 4
+  role: 'client'
+  email: 'client3@gmail.com'
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
+  avatar: 'hello3.jpg'
+  firstName: 'Client3'
+  lastName: 'Clientovich3'
+  phone: '+1235'
+  description: ''
+  age: 27
+
+ user4:
+  id: 5
+  role: 'freelancer'
+  email: 'freelancer@gmail.com'
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
+  avatar: 'hi.jpg'
+  firstName: 'Freelancer'
+  lastName: 'Freelancerovich'
+  phone: '+321'
+  description: ''
+  age: 20
+
+ user5:
+  id: 6
+  role: 'freelancer'
+  email: 'freelancer2@gmail.com'
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
+  avatar: 'hi2.jpg'
+  firstName: 'Freelancer2'
+  lastName: 'Freelancerovich2'
+  phone: '+321'
+  description: ''
+  age: 21
+
+ user6:
+  id: 7
+  role: 'freelancer'
+  email: 'freelancer3@gmail.com'
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
+  avatar: 'hi3.jpg'
+  firstName: 'Freelancer3'
+  lastName: 'Freelancerovich3'
+  phone: '+321'
+  description: ''
+  age: 22

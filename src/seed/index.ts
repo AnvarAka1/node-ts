@@ -3,11 +3,11 @@ import stackSeed from './stack.seed'
 import positionSeed from './position.seed'
 import skillSeed from './skill.seed'
 
-export default async () => {
+export default async (connectionName = 'default') => {
   try {
-    await adminSeed()
-    await stackSeed()
-    await positionSeed()
-    await skillSeed()
+    await adminSeed(connectionName)
+    await stackSeed(connectionName)
+    await positionSeed(connectionName)
+    await skillSeed(connectionName)
   } finally {}
 }

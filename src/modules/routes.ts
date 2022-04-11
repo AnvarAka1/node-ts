@@ -9,12 +9,14 @@ import adminRoutes from './admin/routes'
 import clientRoutes from './client/routes'
 import freelancerRoutes from './freelancer/routes'
 import authRoutes from './auth/routes'
+import sharedRoutes from './shared/routes'
 
 const router = Router()
 
 router.use('/admin', isAuth, isAdmin, adminRoutes)
 router.use('/client', isAuth, isClient, clientRoutes)
 router.use('/freelancer', isAuth, isFreelancer, freelancerRoutes)
+router.use('/', sharedRoutes)
 router.use('/', authRoutes)
 
 export default router

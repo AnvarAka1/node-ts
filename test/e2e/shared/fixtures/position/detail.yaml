@@ -1,0 +1,25 @@
+entity: Position
+items:
+ position:
+  id: 1
+
+   [
+    {
+     "name": "Manager"
+    },
+    {
+     "name": "CEO"
+    },
+    {
+     "name": "CFO"
+    },
+    {
+     "name": "Accountant"
+    },
+    {
+     "name": "Human Resource"
+    },
+    {
+     "name": "CTO"
+    }
+   ]

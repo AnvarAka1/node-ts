@@ -6,8 +6,8 @@ import { ADMIN_TYPE } from 'src/constants/roles'
 
 import adminFixture from './fixtures/admin.fixture.json'
 
-export default async () => {
-  const userRepository = getRepository(User)
+export default async (connectionName: string) => {
+  const userRepository = getRepository(User, connectionName)
 
   const adminUser = await userRepository.findOne({ role: ADMIN_TYPE })
   if (!adminUser) {
@@ -15,7 +15,7 @@ export default async () => {
 
     const newAdminUser = userRepository.create({
       ...adminFixture,
-      password: hashedPassword,
+      password: hashedPassword
     })
 
     await userRepository.save(newAdminUser)

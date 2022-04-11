@@ -1,0 +1,14 @@
+entity: User
+items:
+ user:
+  id: 2
+  role: 'client'
+  email: 'client@gmail.com'
+  password: '$2a$12$zA8UQi5kOja72IwucHasD.GYyZI18MBZ5hneXbXc3q1P581kQ0SXy'
+  avatar: 'hello.jpg'
+  firstName: 'Client'
+  lastName: 'Clientovich'
+  phone: '+123'
+  description: ''
+  age: 25
+

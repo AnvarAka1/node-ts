@@ -19,7 +19,7 @@ import { Project } from 'src/entity/Project'
 import { FreelancerPrice } from 'src/entity/FreelancerPrice'
 import { Portfolio } from 'src/entity/Portfolio'
 import { User } from 'src/entity/User'
-import { PaymentMethod } from 'src/entity/PaymentMethod'
+import { FreelancerPaymentMethod } from 'src/entity/FreelancerPaymentMethod'
 
 @Entity()
 export class Freelancer extends BaseEntity {
@@ -48,8 +48,8 @@ export class Freelancer extends BaseEntity {
   @Column({ default: 'active' })
   status: string
 
-  @OneToOne(_type => PaymentMethod, paymentMethod => paymentMethod.freelancer)
-  paymentMethods: PaymentMethod
+  @OneToOne(_type => FreelancerPaymentMethod, paymentMethod => paymentMethod.freelancer)
+  paymentMethods: FreelancerPaymentMethod
 
   @Column()
   rating: number
